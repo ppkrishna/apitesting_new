@@ -1,0 +1,52 @@
+package com.api.testing;
+
+import static io.restassured.RestAssured.given;
+
+import org.json.simple.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.Method;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+
+public class Put {
+
+	@Test
+    public void GerDetails()
+    {   
+    // Specify the base URL to the RESTful web service
+    RestAssured.baseURI = "https://reqres.in";
+    
+    JSONObject JsonObj = new JSONObject();
+    JsonObj.put("name","Sri");
+    JsonObj.put("job", "leader");
+   
+    
+    RequestSpecification httpRequest = RestAssured.given();
+    
+    httpRequest.header("Content-Type","application/json");
+    //httpRequest.body(JsonObj.toString());
+    httpRequest.body(JsonObj.toString());
+    // Make a request to the server by specifying the method Type and the method URL.
+    // This will return the Response from the server. Store the response in a variable.
+    Response response = httpRequest.request(Method.POST, "/api/users");
+    
+    // Now let us print the body of the message to see what response
+    // we have recieved from the server
+    System.out.print(response.getStatusCode());
+    String responseBody = response.getBody().asString();
+    System.out.println("Response Body is =>  " + responseBody);
+    String rid = response.jsonPath().get("name");
+    System.out.println(rid);
+    Assert.assertEquals(rid, "Sri");
+    }
+   
+}
+
+
+
+
+
+
