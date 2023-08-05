@@ -1,0 +1,37 @@
+package com.api.testing;
+
+import static io.restassured.RestAssured.given;
+import org.json.simple.JSONObject;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import io.restassured.matcher.ResponseAwareMatcher;
+import io.restassured.response.Response;
+
+
+public class dataexternal{
+    
+
+@DataProvider(name = "coun")
+public String[][] createMD5TestData() {
+        return new String[][] {
+            {"1"},
+            {"3"},
+            {"5"}
+    };
+}
+
+@Test(dataProvider = "coun")
+public void getData(String originalText) {
+        
+    given().then().log().all().
+    when().
+        get("https://reqres.in/api/users/"+ originalText).
+    then().
+        statusCode(200);
+}
+
+
+
+
+}
