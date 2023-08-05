@@ -1,0 +1,30 @@
+package com.api.testing;
+
+
+import org.testng.annotations.Test;
+
+import org.testng.Assert;
+
+import io.restassured.RestAssured;
+import static io.restassured.RestAssured.given;
+import io.restassured.response.Response;
+
+public class Bdd1 {
+	
+	@Test
+	public void Test2()
+	{
+		
+		given().
+		redirects().follow(false).when().get("https://google.com").then().assertThat().statusCode(301);
+	}
+@Test
+	public void Test4()
+	{
+		
+		given().
+		when().get("https://httpbin.org/basic-auth/scott/tiger").then().assertThat().statusCode(401);
+	}
+
+	
+}
