@@ -1,0 +1,39 @@
+package com.api.testing;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class Ex1 {
+	
+	@Test
+	public void test()
+	{
+		
+		Response response=RestAssured.get("https://reqres.in/api/users/2");
+		System.out.println(response.statusCode());
+		System.out.println(response.asString());
+		System.out.println(response.getHeaders());
+		
+		String conn=response.getHeader("Connection");
+		System.out.println(response.getBody().asString());
+		System.out.println(response.statusLine());
+		
+		int statusCode = response.getStatusCode();
+		
+        Assert.assertEquals(statusCode, 200);
+        
+        System.out.println(response.statusCode());
+        
+        
+        
+
+        Assert.assertEquals(response.jsonPath().getInt("data.id"), 2);
+        Assert.assertEquals(response.jsonPath().getString("data.first_name"), "Janet");
+        Assert.assertEquals(conn, "keep-alive");
+		
+	}
+
+}
